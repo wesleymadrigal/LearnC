@@ -41,7 +41,7 @@ void Address_print(struct Address *addr)
 	printf("%d %s %s\n",
 		addr->id, addr->name, addr->email);
 }
-// taking as parameters Connection struct with comprises
+// taking as parameters Connection struct which comprises
 // a FILE and Database struct --> comprises an Address struct with 100 rows
 
 void Database_load(struct Connection *conn)
@@ -133,7 +133,7 @@ void Database_get(struct Connection *conn, int id)
 {
 	struct Address *addr = &conn->db->rows[id];
 
-	if(addr->set)	{
+	if(addr->set == 0)	{
 		Address_print(addr);
 	} else {
 		die("ID is not set");
@@ -191,7 +191,7 @@ int main(int argc, char *argv[])
 		case 's':
 			if(argc != 6) die("Need id, name, email to set");
 
-			Database_set(conn, id, argv[6], argv[7]);
+			Database_set(conn, id, argv[4], argv[5]);
 			Database_write(conn);
 			break;
 

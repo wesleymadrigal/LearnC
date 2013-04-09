@@ -1,27 +1,58 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+
+void die(const char *message)
+{
+	if(errno)
+	{
+		perror(message);
+	} else {
+		printf("ERROR: %s\n", message);
+	}
+	exit(1);
+}
+
+typedef int (*math)(int a, int b);
+
+int multiply(int a, int b)
+{
+	return a * b;
+}
+
+int divide(int a, int b)
+{
+	return a/b;
+}
+
+int modulus(int a, int b)
+{
+	return a % b;
+}
+
+
+void test_methods(int a, int b, math func)
+{
+	printf("The result of applying method to %d and %d is: %d\n", a, b, func(a, b));
+}
 
 int main(int argc, char *argv[])
 {
-	int i;
-	
-	int product = 0;
-	for(i=1; i < argc; i++)
+
+	if(argc != 3)
 	{
-		if(i == 1)
-		{
-			int first = (int)argv[i];
-			printf("The first %d.\n", first);
-			//product = product + (int)argv[i];
-		}
-		else
-		{
-			int cur = (int)argv[i];
-			printf("The %d.\n", cur);
-			//product = product * (int)argv[i];
-		}
+		printf("ERROR: Only two numbers as arguments\n");
+	} else {
+		int a = atoi(argv[1]);
+		int b = atoi(argv[2]);
+
+		test_methods(a, b, multiply);
+		test_methods(a, b, divide);
+		test_methods(a, b, modulus);
+		
 	}
 
-	printf("The product of the numbers is %d.\n", product);
-
 	return 0;
-}
+}		
+		
