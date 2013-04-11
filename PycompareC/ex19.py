@@ -12,6 +12,9 @@ class Person(object):
 	def get_name(self):
 		return self._name
 
+	def get_life(self):
+		return self._life
+
 	def get_location(self):
 		if self._room != None:
 			return self._room._room
@@ -29,10 +32,18 @@ class Person(object):
 			room._person = self
 
 	def attack(self, monster, damage):
-		monster._life -= damage
-		monster.grunt()
+		if monster._life > damage:
+			monster._life -= damage
+			print "{0} attacked {1} and dealt {2} damage!".format(self._name, monster._name, damage)
+			monster.grunt()
+		else:
+			print "{0} attacked and killed the {1}!!!!".format(self._name, monster._name)
+			monster.die()
 	def attack_response(self):
 		print "Ow, that hurt!"
+
+	def die(self):
+		print "%s is dead." % self._name
 
 
 class Room(object):
@@ -65,8 +76,13 @@ class Monster(object):
 		self._power = 50
 		self._room = None
 	def attack(self, human, damage):
-		human._life -= damage
-		human.attack_response()
+		if human._life > damage:
+			human._life -= damage
+			print "{0} bit {1} and dealt {2} damage!".format(self._name, human.get_name(), damage)
+			human.attack_response()
+		else:
+			print "{0} bit and killed {1}".format(self._name, human.get_name())
+			human.die()
 
 	def grunt(self):
 		print "Arghhhhhhhhhhhh!!! Rawrrrr!  I will eat you!"
@@ -80,6 +96,15 @@ class Monster(object):
 			self._room = room
 			room._monster = self
 
+	def get_location(self):
+		if self._room != None:
+			return self._room._location, self._room._room
+		else:
+			return None
+
+	def die(self):
+		self._life = 0
+		print "%s is dead" % self._name
 
 
 
