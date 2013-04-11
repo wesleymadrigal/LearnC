@@ -32,13 +32,17 @@ class Person(object):
 			room._person = self
 
 	def attack(self, monster, damage):
-		if monster._life > damage:
-			monster._life -= damage
-			print "{0} attacked {1} and dealt {2} damage!".format(self._name, monster._name, damage)
-			monster.grunt()
+		if self.get_location() == monster.get_location():
+			if monster._life > damage:
+				monster._life -= damage
+				print "{0} attacked {1} and dealt {2} damage!".format(self._name, monster._name, damage)
+				monster.grunt()
+			else:
+				print "{0} attacked and killed the {1}!!!!".format(self._name, monster._name)
+				monster.die()
 		else:
-			print "{0} attacked and killed the {1}!!!!".format(self._name, monster._name)
-			monster.die()
+			print "You are not in the same room as {0}. {0} is in {1}".format(monster.get_name(), monster.get_location())
+
 	def attack_response(self):
 		print "Ow, that hurt!"
 
@@ -76,31 +80,42 @@ class Monster(object):
 		self._power = 50
 		self._room = None
 	def attack(self, human, damage):
-		if human._life > damage:
-			human._life -= damage
-			print "{0} bit {1} and dealt {2} damage!".format(self._name, human.get_name(), damage)
-			human.attack_response()
+		if human.get_location() == self.get_location():
+			if human._life > damage:
+				human._life -= damage
+				print "{0} bit {1} and dealt {2} damage!".format(self._name, human.get_name(), damage)
+				human.attack_response()
+			else:
+				print "{0} bit and killed {1}".format(self._name, human.get_name())
+				human.die()
 		else:
-			print "{0} bit and killed {1}".format(self._name, human.get_name())
-			human.die()
+			print "{0} is in {1} and you are in {2}, can't attack.".foramt(human.get_name(), human.get_location(), self.get_location())
 
+	def get_name(self):
+		return self._name
+
+	def get_life(self):
+		return self._life
+	
 	def grunt(self):
 		print "Arghhhhhhhhhhhh!!! Rawrrrr!  I will eat you!"
 
-	def set_room(self, room):
+	def move(self, room):
 		if self._room != None:
 			self._room._monster = None
+			print "{0} moved from {1} to {2}".format(self.get_name(), self.get_location(), room._room)
 			self._room = room
 			room._monster = self
 		else:
 			self._room = room
 			room._monster = self
+			print "{0} moved to {1}".format(self.get_name(), self.get_location())
 
 	def get_location(self):
 		if self._room != None:
-			return self._room._location, self._room._room
+			return self._room._room
 		else:
-			return None
+			return "Not in  room"
 
 	def die(self):
 		self._life = 0
