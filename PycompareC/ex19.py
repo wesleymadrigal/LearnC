@@ -149,6 +149,7 @@ class Monster(object):
 class Lesser_Monster(Monster):
 	def __init__(self, name):
 		self._name = name
+		self._alive = True
 		self._life = 20
 		self._power = 20
 		self._room = None
