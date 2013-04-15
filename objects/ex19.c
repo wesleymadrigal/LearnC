@@ -67,6 +67,7 @@ void *Room_move(void *self, Direction direction)
 	return next;
 }
 
+
 int Room_attack(void *self, int damage)
 {
 	Room *room = self;
@@ -81,6 +82,15 @@ int Room_attack(void *self, int damage)
 		return 1;
 	}
 }
+
+int Map_attack(void *self, int damage)
+{
+        Map* map = self;
+        Room *location = map->location;
+        assert(map != NULL && location != NULL);
+        return location->_(attack)(location, damage);
+}
+
 
 Object RoomProto = {
 	.move = Room_move,

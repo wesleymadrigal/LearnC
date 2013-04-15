@@ -70,3 +70,4 @@ void *Object_new(size_t size, Object proto, char *description)
 		return el;
 	}
 }
+
