@@ -1,0 +1,6 @@
+Here is a test file.
+This will be opened and read in binary with C.
+What is most interesting,
+Is the fact that when I change lines,
+There is a character representation of me doing so.
+There are character representations of everything in programming.
