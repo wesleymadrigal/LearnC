@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 	log_info("My age is now: %d", get_age());
 	// test out THE_SIZE extern
 	log_info("THE_SIZE is: %d", THE_SIZE);
+	log_info("The address of THE_SIZE is: %p", &THE_SIZE);
 	print_size();
 
 	THE_SIZE = 9;
@@ -46,9 +47,15 @@ int main(int argc, char *argv[])
 	int count = 4;
 	scope_demo(count);
 	scope_demo(count * 20);
-
+/*	
 	log_info("count after calling scope_demo: %d", count);
-	log_info("The ratio is: %f", ratio);	
+	log_info("The ratio is: %f", ratio);
+
+	log_info("The address of THE_AGE: %p", &get_age());
+	log_info("The current value of THE_AGE: %d", get_age());
+	*get_age() = 0;
+	log_info("After setting THE_AGE pointer to 0 THE_AGE value is: %d", THE_AGE);	
+*/
 	return 0;
 }
 	

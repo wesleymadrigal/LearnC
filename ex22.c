@@ -2,7 +2,7 @@
 #include "ex22.h"
 #include "dbg.h"
 
-int THE_SIZE = 1000;
+int THE_SIZE = 2000;
 
 static int THE_AGE = 37;
 
