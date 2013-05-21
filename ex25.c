@@ -9,12 +9,10 @@ int read_string(char **out_string, int max_buffer)
 {
 	*out_string = calloc(1, max_buffer + 1);
 	check_mem(*out_string);
-
 	char *result = fgets(*out_string, max_buffer, stdin);
 	check(result != NULL, "Input error.");
 
 	return 0;
-
 error:
 	if(*out_string) free(*out_string);
 	*out_string = NULL;
@@ -67,13 +65,16 @@ int read_scan(const char *fmt, ...)
 
 				case 'c':
 					out_char = va_arg(argp, char *);
+					// fgetc returns character currently pointed by internal file position indicator of
+					// the specified stream (stdin) if stream is at eof function returns EOF
+					// returns ferror if read error
 					*out_char = fgetc(stdin);
 					break;
 
 				case 's':
 					max_buffer = va_arg(argp, int);
 					out_string = va_arg(argp, char **);
-					rc = read_sting(out_string, max_buffer);
+					rc = read_string(out_string, max_buffer);
 					check(rc == 0, "Failed to read string.");
 					break;
 
